@@ -16,6 +16,7 @@ class _ContactPageState extends State<ContactPage> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController subjectController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController messageController = TextEditingController();
 
   String? validateField(String? value, String fieldName) {
@@ -29,6 +30,7 @@ class _ContactPageState extends State<ContactPage> {
     if (_formKey.currentState!.validate()) {
       String firstName = firstNameController.text;
       String lastName = lastNameController.text;
+      String email = emailController.text;
       String subject = subjectController.text;
       String message = messageController.text;
 
@@ -38,6 +40,7 @@ class _ContactPageState extends State<ContactPage> {
         'lastName': lastName,
         'subject': subject,
         'message': message,
+        'email':email
       };
 
       // Send data to backend server
@@ -86,6 +89,11 @@ class _ContactPageState extends State<ContactPage> {
                   controller: lastNameController,
                   decoration: InputDecoration(labelText: 'Last Name'),
                   validator: (value) => validateField(value, 'Last Name'),
+                ),
+                TextFormField(
+                  controller: emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                  validator: (value) => validateField(value, 'Email'),
                 ),
                 TextFormField(
                   controller: subjectController,
