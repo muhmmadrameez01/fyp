@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, use_key_in_widget_constructors, library_private_types_in_public_api
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({super.key});
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
@@ -16,7 +18,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (value == null || value.isEmpty) {
       return 'Username is required';
     }
-    // Add more custom validation rules here if needed
     return null;
   }
 
@@ -24,107 +25,110 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     }
-    // You can add more complex email validation if needed
     if (!value.contains('@')) {
       return 'Invalid email address';
     }
     return null;
   }
 
+  InputDecoration inputDecoration(String labelText, {IconData? icon}) {
+    return InputDecoration(
+      hintText: labelText,
+      hintStyle: TextStyle(color: Colors.white),
+      prefixIcon: icon != null
+          ? Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              child: Icon(icon, color: Colors.white, size: 20),
+            )
+          : null,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          
-          children: [
-            SizedBox(height: 100.0),
-            Image.asset('./assets/images/profilepic.png',width: 150,height: 150,),
-            Center(
-              
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                       padding: const EdgeInsets.only(bottom: 100.0)
-                    ),
-                    
-                   SizedBox(height: 10.0),
-                    Container(
-                      width: 370,
-                      height: 75,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: TextFormField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                          hintText: 'Username',
-                          border: OutlineInputBorder(),
-                          labelStyle: TextStyle(color: Colors.black, fontSize: 24.0),
-                        ),
-                        validator: _validateUsername,
-                      ),
-                    ),
-                  SizedBox(height: 20.0),
-                    Container(
-                      width: 370,
-                      height: 75,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: TextFormField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          hintText: 'Email',
-                          border: OutlineInputBorder(),
-                          labelStyle: TextStyle(color: Colors.black, fontSize: 24.0),
-                        ),
-                        validator: _validateEmail,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Form is valid, you can proceed with saving the profile
-                          // You can access the username and email using _usernameController.text and _emailController.text
-                        }
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(20),
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(106, 127, 247, 1),
-                          borderRadius: BorderRadius.circular(6),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 7,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Save profile',
-                            style: TextStyle(
-                              color: Colors.white,
+      extendBodyBehindAppBar: true,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF000428), Color(0xFF004e92)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 60),
+                  Text(
+                    'Edit Profile',
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  ),
+                  SizedBox(height: 40),
+                  Image.asset(
+                    './assets/images/profilepic.png',
+                    width: 150,
+                    height: 150,
+                  ),
+                  SizedBox(height: 40), // Adjusted spacing
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 500),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          TextFormField(
+                            controller: _usernameController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: inputDecoration('Username', icon: Icons.person),
+                            validator: _validateUsername,
+                          ),
+                          SizedBox(height: 16.0),
+                          TextFormField(
+                            controller: _emailController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: inputDecoration('Email', icon: Icons.email),
+                            validator: _validateEmail,
+                          ),
+                          SizedBox(height: 16.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                // Form is valid, you can proceed with saving the profile
+                              }
+                            },
+                            child: Text('Save Profile'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
                             ),
                           ),
-                        ),
+                          SizedBox(height: 20),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

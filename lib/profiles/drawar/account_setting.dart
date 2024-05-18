@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_final_fields, use_key_in_widget_constructors, library_private_types_in_public_api, file_names
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 
 class AccountSettingsPage extends StatefulWidget {
+  const AccountSettingsPage({super.key});
+
   @override
   _AccountSettingsPageState createState() => _AccountSettingsPageState();
 }
@@ -34,103 +36,106 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
     return null;
   }
 
+  InputDecoration inputDecoration(String labelText, {IconData? icon}) {
+    return InputDecoration(
+      hintText: labelText,
+      hintStyle: TextStyle(color: Colors.white),
+      prefixIcon: icon != null
+          ? Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.0),
+              child: Icon(icon, color: Colors.white, size: 20),
+            )
+          : null,
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Change Password'),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Center(
-                child: Container(
-                  width: 370,
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(6),
+      extendBodyBehindAppBar: true,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF000428), Color(0xFF004e92)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 60), // Adjust this to move "Change Password" down
+                  Text(
+                    'Change Password',
+                    style: TextStyle(color: Colors.white, fontSize: 40),
                   ),
-                  child: TextFormField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      hintText: 'email',
-                      border: OutlineInputBorder(),
-                      labelStyle: TextStyle(color: Colors.black, fontSize: 24.0),
-                    ),
-                    validator: _validateUsername,
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Center(
-                child: Container(
-                  width: 370,
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextFormField(
-                    controller: _oldPasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Old Password',
-                      border: OutlineInputBorder(),
-                      labelStyle: TextStyle(color: Colors.black, fontSize: 24.0),
-                    ),
-                    validator: _validateOldPassword,
-                  ),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Center(
-                child: Container(
-                  width: 370,
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextFormField(
-                    controller: _newPasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'New Password',
-                      border: OutlineInputBorder(),
-                      labelStyle: TextStyle(color: Colors.black, fontSize: 24.0),
-                    ),
-                    validator: _validateNewPassword,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Form is valid, you can proceed with saving the account settings
-                  }
-                },
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(106, 127, 247, 1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Save password',
-                      style: TextStyle(
-                        color: Colors.white,
+                  SizedBox(height: 40), // Space between title and form
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 500),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          TextFormField(
+                            controller: _usernameController,
+                            style: TextStyle(color: Colors.white),
+                            decoration: inputDecoration('Email', icon: Icons.email),
+                            validator: _validateUsername,
+                          ),
+                          SizedBox(height: 16.0),
+                          TextFormField(
+                            controller: _oldPasswordController,
+                            obscureText: true,
+                            style: TextStyle(color: Colors.white),
+                            decoration: inputDecoration('Old Password', icon: Icons.lock_outline),
+                            validator: _validateOldPassword,
+                          ),
+                          SizedBox(height: 16.0),
+                          TextFormField(
+                            controller: _newPasswordController,
+                            obscureText: true,
+                            style: TextStyle(color: Colors.white),
+                            decoration: inputDecoration('New Password', icon: Icons.lock),
+                            validator: _validateNewPassword,
+                          ),
+                          SizedBox(height: 16.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                // Form is valid, you can proceed with saving the account settings
+                              }
+                            },
+                            child: Text('Save Password'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                            ),
+                          ),
+                          SizedBox(height: 20), // Space at the bottom
+                        ],
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -266,6 +266,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "responsive_framework",
+      "rootUri": "file:///C:/Users/abdul/AppData/Local/Pub/Cache/hosted/pub.dev/responsive_framework-0.1.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///D:/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -410,7 +416,7 @@
       "languageVersion": "3.1"
     }
   ],
-  "generated": "2024-05-18T06:19:22.603081Z",
+  "generated": "2024-05-18T10:58:14.059778Z",
   "generator": "pub",
   "generatorVersion": "3.4.0",
   "flutterRoot": "file:///D:/flutter",
