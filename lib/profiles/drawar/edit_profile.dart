@@ -75,18 +75,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
               padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
-                  SizedBox(height: 60),
+                  SizedBox(height: 80),
                   Text(
                     'Edit Profile',
                     style: TextStyle(color: Colors.white, fontSize: 40),
                   ),
                   SizedBox(height: 40),
-                  Image.asset(
-                    './assets/images/profilepic.png',
-                    width: 150,
-                    height: 150,
-                  ),
-                  SizedBox(height: 40), // Adjusted spacing
                   Container(
                     constraints: BoxConstraints(maxWidth: 500),
                     child: Form(
