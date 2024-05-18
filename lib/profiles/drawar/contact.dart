@@ -15,6 +15,7 @@ class _ContactPageState extends State<ContactPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController subjectController = TextEditingController();
   TextEditingController messageController = TextEditingController();
 
@@ -29,6 +30,7 @@ class _ContactPageState extends State<ContactPage> {
     if (_formKey.currentState!.validate()) {
       String firstName = firstNameController.text;
       String lastName = lastNameController.text;
+      String email = emailController.text;
       String subject = subjectController.text;
       String message = messageController.text;
 
@@ -36,6 +38,7 @@ class _ContactPageState extends State<ContactPage> {
       Map<String, dynamic> data = {
         'firstName': firstName,
         'lastName': lastName,
+        'email':email,
         'subject': subject,
         'message': message,
       };
@@ -86,6 +89,11 @@ class _ContactPageState extends State<ContactPage> {
                   controller: lastNameController,
                   decoration: InputDecoration(labelText: 'Last Name'),
                   validator: (value) => validateField(value, 'Last Name'),
+                ),
+                TextFormField(
+                  controller: emailController,
+                  decoration: InputDecoration(labelText: 'Email'),
+                  validator: (value) => validateField(value, 'Email'),
                 ),
                 TextFormField(
                   controller: subjectController,
